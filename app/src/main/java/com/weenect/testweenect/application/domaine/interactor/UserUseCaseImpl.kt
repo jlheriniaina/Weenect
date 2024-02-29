@@ -15,7 +15,7 @@ constructor(
 ) : UserUseCase {
     override suspend fun getAllUser(page: Int): Flow<List<User>> {
        return flow {
-               val users = userRepository.getUsers()
+               val users = userRepository.getUsers(page)
                emit(users)
        }.flowOn(Dispatchers.IO)
     }

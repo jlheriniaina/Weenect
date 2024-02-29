@@ -15,17 +15,20 @@ fun UserRoute(
 ) {
    // State observing and declarations
    val uiState by coordinator.stateFlow.collectAsState()
+   val uiNetworkState by coordinator.networkState.collectAsState()
 
    //UI Actions
    val actions = rememberUserActions(coordinator = coordinator)
 
    //UI Rendering
-   UserScreen(state = uiState, actions = actions)
+   UserScreen(state = uiState, netState = uiNetworkState, actions = actions)
 
 }
 @Composable
 fun rememberUserActions(coordinator: UserCoordinator) : UserActions  {
     return remember(coordinator){
-            UserActions(onSelectedItem = coordinator::onDetail)
+            UserActions(onSelectedItem = coordinator::onDetail,
+                        onLoadMoreItem = coordinator::onLoadItem,
+                        onNetworkActive = coordinator::isAvailableNetwork)
     }
 }

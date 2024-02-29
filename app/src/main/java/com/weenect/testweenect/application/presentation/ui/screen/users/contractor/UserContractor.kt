@@ -12,5 +12,7 @@ sealed class UserState {
 }
 
 data class UserActions(
-    val onSelectedItem : (User) -> Unit
+    val onSelectedItem : (User) -> Unit,
+    val onNetworkActive : () -> Unit,
+    val onLoadMoreItem : () -> Unit
 )

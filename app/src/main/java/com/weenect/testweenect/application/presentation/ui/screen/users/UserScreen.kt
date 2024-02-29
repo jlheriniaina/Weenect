@@ -2,13 +2,16 @@ package com.weenect.testweenect.application.presentation.ui.screen.users
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -23,7 +26,7 @@ import com.weenect.testweenect.application.presentation.ui.theme.Primary
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UserScreen(state : UserState, actions: UserActions){
+fun UserScreen(state : UserState,netState : Boolean, actions: UserActions){
 
     Scaffold(
         topBar = {
@@ -49,9 +52,8 @@ fun UserScreen(state : UserState, actions: UserActions){
                 is UserState.Success -> UserContent(
                     modifier = Modifier.padding(contentPadding),
                     users = state.users,
-                    onSelected = {
-                        actions.onSelectedItem(it)
-                    }
+                    netSate = netState,
+                    actions = actions
                 )
                 is UserState.Empty -> EmptyContent(
                     modifier = Modifier.padding(
@@ -60,6 +62,7 @@ fun UserScreen(state : UserState, actions: UserActions){
             }
         }
     )
+
 }
 
 @Composable
@@ -67,8 +70,14 @@ fun UserScreen(state : UserState, actions: UserActions){
 private fun UserScreenPreview() {
     UserScreen(
         state = UserState.Idle,
+        netState = false,
         actions = UserActions(onSelectedItem = {
 
-        })
+        }, onLoadMoreItem = {
+
+        },
+            onNetworkActive = {
+
+            })
     )
 }

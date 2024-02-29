@@ -8,8 +8,16 @@ import com.weenect.testweenect.application.presentation.ui.screen.users.UserView
 
 class UserCoordinator(val viewModel: UserViewModel) {
     val stateFlow = viewModel.stateFlow
+    val networkState = viewModel.networkState
     fun onDetail(user : User){
 
+    }
+
+    fun isAvailableNetwork(){
+        viewModel.checkNetwork()
+    }
+    fun onLoadItem(){
+       viewModel.getUsers()
     }
 }
 @Composable

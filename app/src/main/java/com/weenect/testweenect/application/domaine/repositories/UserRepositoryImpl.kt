@@ -7,39 +7,40 @@ import com.weenect.testweenect.framework.data.remote.models.request.ParamBuilder
 import com.weenect.testweenect.framework.data.remote.models.response.UserResult
 import com.weenect.testweenect.framework.data.remote.service.RemoteApiService
 import com.weenect.testweenect.application.domaine.entities.User
+import com.weenect.testweenect.helpers.CheckInternet
 import kotlinx.coroutines.coroutineScope
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject  constructor(
     private val remoteApiService: RemoteApiService,
-    private val userDao: UserDao
+    private val userDao: UserDao,
+    private val checkInternet: CheckInternet
 ) : UserRepository {
 
 
-    override suspend fun getUsers(): List<User> {
+    override suspend fun getUsers(page : Int): List<User> {
        return coroutineScope {
-           val data = remoteApiService.getUser(
-                         data = ParamBuilderQueryRequest()
-                               .addParams(
-                                   "page" to 1,
-                                   "results" to 10,
-                                   "seed" to "weenect"
-                               )
-           )
-           Log.d("TEST_APP", Gson().toJson(data))
-           if (data.results.isNotEmpty()){
+           if (checkInternet.isCheck()){
+               val data = remoteApiService.getUser(
+                   data = ParamBuilderQueryRequest()
+                       .addParams(
+                           "page" to page,
+                           "results" to 10,
+                           "seed" to "weenect"
+                       )
+               )
                val users = mapperUser(data.results)
                userDao.insertAll(users)
                return@coroutineScope users
            }else {
-               userDao.findAll()
+              return@coroutineScope userDao.findAll()
            }
-           return@coroutineScope emptyList()
        }
     }
     private fun mapperUser(users : List<UserResult>) : List<User> {
         return users.map {
             User(
+                uuid = it.userLogin?.uuid?: generateRandom(10),
                 name = it.userInfo?.last ?: "",
                 firstname = it.userInfo?.first?: "",
                 avatarProfil = it.picture?.thumbnail?: "",
@@ -49,5 +50,12 @@ class UserRepositoryImpl @Inject  constructor(
                 cell = it.cell, age = 10,
             )
         }
+    }
+
+    fun generateRandom(length: Int): String {
+        val charset = ('a'..'z') + ('A'..'Z') + ('0'..'9') // Define the character set you want to use
+        return (1..length)
+            .map { charset.random() }
+            .joinToString("")
     }
 }

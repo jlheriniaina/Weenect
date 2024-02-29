@@ -10,8 +10,8 @@ import com.weenect.testweenect.framework.data.remote.models.response.UserInfo
 
 @Entity(tableName = "user")
 data class User(
-    @PrimaryKey(autoGenerate = true)
-    var id : Long = 0,
+    @PrimaryKey
+    var uuid : String = "",
     var name : String,
     var firstname : String,
     var avatarProfil : String,

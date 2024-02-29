@@ -20,11 +20,11 @@ class CheckInternet @Inject constructor() {
         CoroutineScope(Dispatchers.IO).launch(Dispatchers.IO) {
             try {
                 Socket().use { it.connect(InetSocketAddress(HOST_NAME, PORT), TIMEOUT) }
-                withContext(Dispatchers.Main) {
+                withContext(Dispatchers.IO) {
                     listener(true)
                 }
             } catch (e: IOException) {
-                withContext(Dispatchers.Main) {
+                withContext(Dispatchers.IO) {
                     listener(false)
                 }
             }

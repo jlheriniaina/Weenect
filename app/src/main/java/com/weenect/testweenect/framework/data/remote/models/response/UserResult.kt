@@ -20,5 +20,7 @@ class UserResult(
     @SerializedName("picture" )
     var picture    : Picture?= Picture(),
     @SerializedName("nat")
-    var nat  : String?= null
+    var nat  : String?= null,
+    @SerializedName("login")
+    var userLogin : UserLoginInfo? = UserLoginInfo()
 )
