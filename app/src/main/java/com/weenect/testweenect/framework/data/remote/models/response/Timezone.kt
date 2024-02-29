@@ -1,0 +1,10 @@
+package com.weenect.testweenect.framework.data.remote.models.response
+
+import com.google.gson.annotations.SerializedName
+
+data class Timezone(
+    @SerializedName("offset")
+    var offset : String? = null,
+    @SerializedName("description")
+    var description : String? = null
+)

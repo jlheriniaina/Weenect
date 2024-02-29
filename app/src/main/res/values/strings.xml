@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">TestWeenect</string>
+    <string name="app_name">Weenect</string>
+    <string name="txt_error_empty_user">Aucun user disponible</string>
+    <string name="txt_title">Utilisateurs</string>
 </resources>
