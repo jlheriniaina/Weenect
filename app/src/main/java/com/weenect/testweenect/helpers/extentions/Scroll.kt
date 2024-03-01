@@ -1,4 +1,4 @@
-package com.weenect.testweenect.helpers
+package com.weenect.testweenect.helpers.extentions
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable

@@ -2,6 +2,20 @@ package com.weenect.testweenect.framework.data.remote.models.response
 
 import com.google.gson.annotations.SerializedName
 
+/**
+ *
+ *
+ * @property gender
+ * @property userInfo
+ * @property location
+ * @property email
+ * @property phone
+ * @property cell
+ * @property id
+ * @property picture
+ * @property nat
+ * @property userLogin
+ */
 class UserResult(
     @SerializedName("gender")
     var gender : String?= null,

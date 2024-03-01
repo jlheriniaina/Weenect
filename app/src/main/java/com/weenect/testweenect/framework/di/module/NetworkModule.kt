@@ -24,6 +24,7 @@ import javax.inject.Singleton
 class NetworkModule {
     private val NETWORK_TIMEOUT = 60L
 
+    // Fournit une instance de Gson
     @Provides
     @Singleton
     fun provideGson(): Gson {
@@ -33,6 +34,8 @@ class NetworkModule {
             .setLenient()
         return gsonBuilder.create()
     }
+
+    // Fournit une instance de l'interface RemoteApi annotée avec @Api
     @Provides
     @Singleton
     @Api
@@ -47,6 +50,7 @@ class NetworkModule {
             .build()
             .create(RemoteApi::class.java)
     }
+    // Fournit une instance d'OkHttpClient annotée avec @HttpClient
     @Provides
     @Singleton
     @HttpClient

@@ -4,8 +4,6 @@ import android.content.Context
 import com.weenect.testweenect.WeenectApp
 import com.weenect.testweenect.framework.data.remote.service.RemoteApiService
 import com.weenect.testweenect.framework.data.remote.service.RemoteApiServiceImpl
-import com.weenect.testweenect.application.domaine.interactor.UserUseCase
-import com.weenect.testweenect.application.domaine.interactor.UserUseCaseImpl
 import com.weenect.testweenect.application.domaine.repositories.UserRepository
 import com.weenect.testweenect.application.domaine.repositories.UserRepositoryImpl
 import com.weenect.testweenect.application.presentation.navigation.AppNavigator
@@ -21,24 +19,25 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class AppModule {
 
+    // Fournit une instance de l'application Weenect
     @Provides
     @Singleton
     fun provideApplicationInstance(@ApplicationContext context: Context): WeenectApp {
         return context as WeenectApp
     }
-
+    // Fournit une instance de l'implémentation de AppNavigator
     @Provides
     @Singleton
     fun providesAppNavigator(impl: AppNavigatorImpl): AppNavigator = impl
+
+    // Fournit une instance de l'implémentation de RemoteApiService
     @Provides
     @Singleton
     fun provideRemoteApiService(impl : RemoteApiServiceImpl): RemoteApiService = impl
 
+    // Fournit une instance de l'implémentation de UserRepository
     @Provides
     @Singleton
     fun provideUserRepository(impl : UserRepositoryImpl): UserRepository = impl
 
-    @Provides
-    @Singleton
-    fun provideUserUseCase(impl : UserUseCaseImpl): UserUseCase = impl
 }

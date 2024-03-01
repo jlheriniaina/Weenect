@@ -1,4 +1,9 @@
 package com.weenect.testweenect.helpers
+
+import com.weenect.testweenect.helpers.extentions.appendParams
+
+const val KEY_USER_ID = "userId"
+
 sealed class Destination(protected val route: String, vararg params: String) {
 
     val fullRoute: String = if (params.isEmpty()) route else {
@@ -11,16 +16,11 @@ sealed class Destination(protected val route: String, vararg params: String) {
     }
 
     data object UserScreen : NoArgumentsDestination(NavigationConstant.USER_SCREEN)
-    data object DetailsUserScreen : NoArgumentsDestination(NavigationConstant.DETAILS)
+    data object DetailsUserScreen : Destination(NavigationConstant.DETAILS, "userId"){
 
-}
-
-fun String.appendParams(vararg params: Pair<String, Any?>): String {
-    val builder = StringBuilder(this)
-    params.forEach {
-        it.second?.toString()?.let { arg ->
-            builder.append("/$arg")
-        }
+        operator fun invoke(userId : String) : String = route.appendParams(
+            KEY_USER_ID to userId
+        )
     }
-    return builder.toString()
+
 }

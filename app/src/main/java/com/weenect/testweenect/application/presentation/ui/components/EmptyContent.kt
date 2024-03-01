@@ -1,4 +1,4 @@
-package com.weenect.testweenect.application.presentation.ui.screen.users.components
+package com.weenect.testweenect.application.presentation.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

@@ -9,21 +9,35 @@ import com.weenect.testweenect.application.presentation.ui.screen.users.contract
 import com.weenect.testweenect.application.presentation.ui.screen.users.coordinator.UserCoordinator
 import com.weenect.testweenect.application.presentation.ui.screen.users.coordinator.rememberHomeCoordinator
 
+
+/**
+ * Compose la route de l'écran d'accueil des utilisateurs.
+ *
+ * @param coordinator Le coordinateur de l'écran d'accueil des utilisateurs.
+ */
 @Composable
 fun UserRoute(
     coordinator: UserCoordinator = rememberHomeCoordinator()
 ) {
-   // State observing and declarations
-   val uiState by coordinator.stateFlow.collectAsState()
-   val uiNetworkState by coordinator.networkState.collectAsState()
+    // Récupération de l'état et de l'état du de données depuis le coordinateur
+    val uiState by coordinator.stateFlow.collectAsState()
+    // Récupération de l'état et de l'état du réseau depuis le coordinateur
+    val uiNetworkState by coordinator.networkState.collectAsState()
 
-   //UI Actions
+   // Rappel des actions associées à l'écran d'accueil des utilisateurs en fonction du coordinateur
    val actions = rememberUserActions(coordinator = coordinator)
 
-   //UI Rendering
-   UserScreen(state = uiState, netState = uiNetworkState, actions = actions)
+    // Composition de l'écran d'accueil des utilisateurs avec l'état et les actions
+    UserScreen(state = uiState, netState = uiNetworkState, actions = actions)
 
 }
+
+/**
+ * Retient les actions associées à l'écran d'accueil des utilisateurs en fonction du coordinateur.
+ *
+ * @param coordinator Le coordinateur de l'écran d'accueil des utilisateurs.
+ * @return Les actions associées à l'écran d'accueil des utilisateurs.
+ */
 @Composable
 fun rememberUserActions(coordinator: UserCoordinator) : UserActions  {
     return remember(coordinator){

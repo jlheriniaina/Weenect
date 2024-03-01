@@ -16,12 +16,15 @@ import javax.inject.Singleton
 class DBModule {
 
     private val DATABESE_NAME  = "weenect-db"
+
+    // Fournit une instance de la base de données AppDatabase
     @Singleton
     @Provides
     fun provideDatabase(@ApplicationContext context: Context) : AppDatabase =
         Room.databaseBuilder(context, AppDatabase::class.java, DATABESE_NAME)
             .fallbackToDestructiveMigration().build()
 
+    // Fournit une instance du DAO (Data Access Object) User
     @Singleton
     @Provides
     fun provideUserDao(appDatabase: AppDatabase) : UserDao = appDatabase.userDao()

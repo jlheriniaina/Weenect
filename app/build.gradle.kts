@@ -2,7 +2,6 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
-    id("kotlin-kapt")
     id("kotlin-parcelize")
     id("com.google.dagger.hilt.android")
 }
@@ -67,11 +66,14 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+
+    //Splash
+    implementation("androidx.core:core-splashscreen:1.0.1")
 
     //Multi density
     implementation("com.intuit.ssp:ssp-android:1.0.6")
     implementation("com.intuit.sdp:sdp-android:1.1.0")
-
 
     //Navigation
     implementation("androidx.navigation:navigation-compose:2.7.7")
@@ -95,6 +97,10 @@ dependencies {
 
     //ImageNetwork
     implementation("io.coil-kt:coil-compose:2.4.0")
+
+    //Maps
+    implementation("com.google.maps.android:maps-compose:2.11.4")
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

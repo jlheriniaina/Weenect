@@ -7,6 +7,10 @@ import com.weenect.testweenect.application.domaine.entities.User
 
 @Database(entities = [User::class], version = 1 ,exportSchema = true)
 abstract class AppDatabase : RoomDatabase() {
-
+    /**
+     * Renvoie une instance de UserDao.
+     *
+     * @return
+     */
     abstract fun userDao() : UserDao
 }

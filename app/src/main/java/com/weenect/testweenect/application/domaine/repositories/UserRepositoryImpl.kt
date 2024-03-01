@@ -1,12 +1,10 @@
 package com.weenect.testweenect.application.domaine.repositories
 
-import android.util.Log
-import com.google.gson.Gson
 import com.weenect.testweenect.framework.data.locals.dao.UserDao
 import com.weenect.testweenect.framework.data.remote.models.request.ParamBuilderQueryRequest
-import com.weenect.testweenect.framework.data.remote.models.response.UserResult
 import com.weenect.testweenect.framework.data.remote.service.RemoteApiService
 import com.weenect.testweenect.application.domaine.entities.User
+import com.weenect.testweenect.application.domaine.entities.mapFromDto
 import com.weenect.testweenect.helpers.CheckInternet
 import kotlinx.coroutines.coroutineScope
 import javax.inject.Inject
@@ -29,7 +27,7 @@ class UserRepositoryImpl @Inject  constructor(
                            "seed" to "weenect"
                        )
                )
-               val users = mapperUser(data.results)
+               val users = data.results.map { it.mapFromDto() }
                userDao.insertAll(users)
                return@coroutineScope users
            }else {
@@ -37,25 +35,7 @@ class UserRepositoryImpl @Inject  constructor(
            }
        }
     }
-    private fun mapperUser(users : List<UserResult>) : List<User> {
-        return users.map {
-            User(
-                uuid = it.userLogin?.uuid?: generateRandom(10),
-                name = it.userInfo?.last ?: "",
-                firstname = it.userInfo?.first?: "",
-                avatarProfil = it.picture?.thumbnail?: "",
-                gender = it.gender,
-                email = it.email,
-                phone = it.phone,
-                cell = it.cell, age = 10,
-            )
-        }
-    }
 
-    fun generateRandom(length: Int): String {
-        val charset = ('a'..'z') + ('A'..'Z') + ('0'..'9') // Define the character set you want to use
-        return (1..length)
-            .map { charset.random() }
-            .joinToString("")
-    }
+    override suspend fun getUser(uuid: String): User = userDao.find(uuid)
+
 }

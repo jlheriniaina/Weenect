@@ -2,6 +2,17 @@ package com.weenect.testweenect.framework.data.remote.models.response
 
 import com.google.gson.annotations.SerializedName
 
+/**
+ * DTO Information sur l'adresse
+ *
+ * @property street
+ * @property city
+ * @property state
+ * @property country
+ * @property postcode
+ * @property coordinate
+ * @property timezone
+ */
 data class Location(
     @SerializedName("street")
     var street : Street? = Street(),
